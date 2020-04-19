@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<!-- Thanks for visiting here ,
+       hope you like the work!!
+            --- @shubham121gupta -->
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhkazHZQaaSTfCc88pTjBjw1YMp7b1Tws&libraries=places"
+        type="text/javascript"></script>
+    <script src="javascript/jquery.parallax.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>COVID-19 Helping Community</title>
+    <style>
+        #stateId {
+            background-position: 14px 12px;
+            background-repeat: no-repeat;
+            font-size: 16px;
+            padding: 14px 20px 12px 45px;
+            border-radius: 25px;
+            border: 2px solid brown;
+        }
+
+        #cityId {
+            box-sizing: border-box;
+            background-image: url('searchicon.png');
+            background-position: 14px 12px;
+            background-repeat: no-repeat;
+            font-size: 16px;
+            padding: 14px 20px 12px 45px;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            border-radius: 25px;
+            border: 2px solid brown;
+        }
+
+        .footer2 {
+            padding-bottom: 2ch;
+            position: relative;
+            left: 0;
+            bottom: 5;
+            width: 100%;
+            color: white;
+            text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .footer {
+            position: relative;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #ddd;
+            color: black;
+            text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .footer p {
+            padding: 1%;
+        }
+
+        .footer1 {
+            position: relative;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            color: black;
+            text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        .products {
+            max-width: 650px;
+            padding: 20px;
+            margin: 30px auto;
+            background-color: #fff;
+            box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .product-image {
+            float: left;
+            width: 40%;
+            margin-right: 15px;
+        }
+
+        .subcateo {
+            font-size: 0.9rem;
+            color: #888;
+            vertical-align: middle;
+        }
+
+        .products {
+            max-width: 400px;
+            padding: 20px;
+            margin: 30px auto;
+            background-color: #fff;
+            box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .products p strong {
+            font-weight: bold;
+        }
+
+        .products p+p {
+            width: 100%;
+            float: left;
+            margin-top: 10px;
+        }
+
+        .products:hover {
+            transition: all 0.3s ease;
+            transform: translateY(-10px);
+            box-shadow: 0px 15px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        #back2Top {
+            width: 40px;
+            line-height: 40px;
+            overflow: hidden;
+            z-index: 999;
+            display: none;
+            cursor: pointer;
+            -moz-transform: rotate(270deg);
+            -webkit-transform: rotate(270deg);
+            -o-transform: rotate(270deg);
+            -ms-transform: rotate(270deg);
+            transform: rotate(270deg);
+            position: fixed;
+            bottom: 50px;
+            right: 0;
+            background-color: #DDD;
+            color: #555;
+            text-align: center;
+            font-size: 30px;
+            text-decoration: none;
+        }
+
+        #back2Top:hover {
+            background-color: #DDF;
+            color: #000;
+        }
+    </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162127825-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-162127825-1');
+    </script>
+</head>
+
+<body onload=>
+
+    <script>
+
+        function search() {
+            var val = $('#cityId').val();
+            console.log(val);
+            $.ajax({
+                url: "http://localhost:3000/api/master/getcomments",
+                method: 'Post',
+                data: {
+                    "city": val
+                },
+                cache: false,
+                success: function (data) {
+                    console.log(data);
+                    console.log(data[0]);
+                    var html = "";
+                    var product1 = data[0];
+                    // for(var i = 0; i<product1.length; i++){
+                    //   var item = product1[i];
+                    //   console.log(item);
+                    //   html += '<h1> Ads Name :'+item.AdsName+'</h1>';
+                    //   html += '<h1> City Name :'+item.City+'</h1>';
+                    // }
+                    // document.getElementById("app").innerHTML=html;
+                    document.getElementById("demo").innerHTML = `
+      ${product1.map(function (prod) {
+                        return `
+        <div class="col-sm-5">
+          <div class = "products">
+            <h2>  ${prod.personName} <span class="subcateo">(${prod.city})</span></h2>
+            <p><strong>  Contact Number : </strong> ${prod.contact} </p>
+            <p><strong>  Message :</strong> ${prod.comment} </p>
+          </div>
+        </a>
+        </div>       
+              `
+                    }).join('')}
+      `
+                }
+            });
+        }
+
+        function postComment() {
+            var val1 = $('#city').val();
+            var val2 = $('#personName').val();
+            var val3 = $('#contact').val();
+            var val4 = $('#message-text').val();
+            var val5 = $('#state').val();
+            console.log(val1);
+            console.log(val2);
+            console.log(val3);
+            console.log(val4);
+            $.ajax({
+                url: "http://localhost:3000/api/master/postcomment",
+                method: 'Post',
+                data: {
+                    "city": val1,
+                    "personName": val2,
+                    "contact": val3,
+                    "comment": val4,
+                    "state": val5
+                },
+                cache: false,
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+
+        function onloadTable() {
+            document.getElementById("table").style.display = 'none';
+        }
+        function onclickTable() {
+            document.getElementById("table").style.display = 'block';
+        }
+
+
+        // $('#exampleModal').on('show.bs.modal', function (event) {
+        //     var button = $(event.relatedTarget) // Button that triggered the modal
+        //     var recipient = button.data('whatever') // Extract info from data-* attributes
+        //     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        //     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        //     var modal = $(this)
+        //     modal.find('.modal-title').text('New message to ' + val1)
+        //     modal.find('.modal-body input').val(val5)
+        // })
+
+        /*Scroll to top when arrow up clicked BEGIN*/
+        $(window).scroll(function () {
+            var height = $(window).scrollTop();
+            if (height > 100) {
+                $('#back2Top').fadeIn();
+            } else {
+                $('#back2Top').fadeOut();
+            }
+        });
+        $(document).ready(function () {
+            $("#back2Top").click(function (event) {
+                event.preventDefault();
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                return false;
+            });
+
+        });
+ /*Scroll to top when arrow up clicked END*/
+
+        function changecity(){
+            var val8 = $('#city').val();
+            document.getElementById("city").value = val8;
+            console.log(val8);
+        }
+
+    </script>
+
+
+
+    <div class="jumbotron text-center" style="margin-bottom:0">
+        <h1>COVID - 19</h1>
+        <p>Helping Community</p>
+    </div>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">Safety Tips</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/when-and-how-to-use-masks">When
+                        and how to use masks</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/myth-busters">Myth-busters</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="https://www.who.int/docs/default-source/coronaviruse/getting-workplace-ready-for-covid-19.pdf?sfvrsn=359a81e7_6">Getting
+                        workplace ready</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public/healthy-parenting">Healthy
+                        parenting</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br><br><br>
+    <div class="container-fluid bg-1 text-center" id="countryDD">
+        <input type="hidden" name="country" id="countryId" value="IN" />
+        <select name="state" class="states order-alpha" id="stateId">
+            <option value="">Select State</option>
+        </select><br><br>
+        <select name="city" class="cities order-alpha" id="cityId">
+            <option value="">Select City</option>
+        </select><br><br>
+        <button type="button" class="btn btn-secondary" onclick="search(),changecity()">Community</button>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="//geodata.solutions/includes/statecity.js"></script>
+    </div><br><br>
+
+    <div id="demo"></div>
+
+
+    <!-- 
+    "POST COMMENT  MODAL" -->
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Post In Community</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">City:</label>
+                            <input type="text" class="form-control" id="city">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">State:</label>
+                            <input type="text" class="form-control" id="state">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Contact Name:</label>
+                            <input type="text" class="form-control" id="personName">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Contact Number:</label>
+                            <input type="text" class="form-control" id="contact">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label" id="comment">Your Message:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="postComment()">Post Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="back2Top" title="Back to top" href="#">&#10148;</a>
+    <br><br>
+    <div class="footer2">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+            data-whatever="@mdo">Post in community of your location </button>
+    </div>
+    <div class="footer">
+        <p>COVID-19 &copy; Shubham Gupta</p>
+    </div>
+
+
+</body>
+
+</html>
