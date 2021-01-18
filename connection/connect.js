@@ -3,8 +3,8 @@ var connect = function()
 {
     var conn = new sql.ConnectionPool({
         user: 'sa',
-        password: 'Pasta@123',
-        server: '103.231.209.235',
+        password: '12345',
+        server: 'localhost',
         database: 'covidHelp',
         "options": {
             "encrypt": true,
